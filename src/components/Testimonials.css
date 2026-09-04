@@ -1,0 +1,296 @@
+.testimonials {
+  background: var(--white);
+  overflow: hidden;
+}
+
+/* Heading only — centred */
+.testimonials__head {
+  text-align: center;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.testimonials__head .heading {
+  margin-bottom: 0;
+}
+
+/* ---------- Rail + edge arrows ---------- */
+.testimonials__rail {
+  position: relative;
+}
+
+.rail__arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--ink);
+  border: 1px solid var(--tint-deep);
+  box-shadow: var(--shadow);
+  transition: background 0.3s var(--ease), color 0.3s var(--ease),
+    box-shadow 0.3s var(--ease);
+}
+
+.rail__arrow:hover {
+  background: var(--ink);
+  color: var(--white);
+  border-color: var(--ink);
+  box-shadow: var(--shadow-lg);
+}
+
+.rail__arrow--prev {
+  left: clamp(0.4rem, 1.5vw, 1.25rem);
+}
+
+.rail__arrow--next {
+  right: clamp(0.4rem, 1.5vw, 1.25rem);
+}
+
+/* ---------- Track ---------- */
+.testimonials__track {
+  display: flex;
+  gap: 1.125rem;
+  overflow-x: auto;
+  /* No scroll-snap: it fights the continuous drift, yanking the track back
+     to the nearest card instead of letting it flow. No end spacers either —
+     they would corrupt the measured loop period. */
+  overscroll-behavior-x: contain;
+  /* Vertical room for the centre card, which scales up past its box */
+  padding: 2rem 0 2.25rem;
+  /* Depth for the coverflow turn — without it rotateY reads as a flat squash */
+  perspective: 1500px;
+  perspective-origin: center;
+  scrollbar-width: none;
+}
+
+.testimonials__track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Scaled and turned by distance from centre — values come from the scroll
+   handler. No transition: they update every frame, and easing would lag. */
+.review {
+  flex: 0 0 clamp(190px, 20vw, 248px);
+  --near: calc(1 - var(--dist, 1));
+  transform: rotateY(calc(var(--offset, 0) * -20deg))
+    scale(calc(0.74 + var(--near) * 0.26));
+  opacity: calc(0.5 + var(--near) * 0.5);
+  will-change: transform, opacity;
+}
+
+.review__btn {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--sky-tint);
+  border: 1px solid var(--tint-deep);
+  /* Shadow grows with the card as it nears centre, so depth tracks scale */
+  box-shadow: 0 calc(3px + var(--near, 0) * 16px) calc(10px + var(--near, 0) * 28px)
+    rgba(15, 22, 38, calc(0.05 + var(--near, 0) * 0.13));
+  transition: border-color 0.4s var(--ease);
+}
+
+.review__btn img {
+  width: 100%;
+  height: auto;
+  /* Phone screenshots vary in height — a fixed ratio keeps the row even */
+  aspect-ratio: 9 / 15;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+
+.review__btn:hover {
+  border-color: var(--accent);
+}
+
+/* Zoom affordance, revealed on hover */
+.review__zoom {
+  position: absolute;
+  right: 0.6rem;
+  bottom: 0.6rem;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(15, 22, 38, 0.72);
+  color: var(--white);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.review__btn:hover .review__zoom {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Dots ---------- */
+.testimonials__dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.testimonials__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--tint-deep);
+  transition: all 0.3s var(--ease);
+}
+
+.testimonials__dot:hover {
+  background: var(--slate-light);
+}
+
+.testimonials__dot.is-active {
+  width: 24px;
+  border-radius: 999px;
+  background: var(--ink);
+}
+
+/* ---------- Lightbox ---------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: clamp(0.5rem, 2vw, 1.5rem);
+  padding: clamp(1rem, 4vw, 2.5rem);
+  animation: lightboxIn 0.25s var(--ease);
+}
+
+@keyframes lightboxIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.lightbox__scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(9, 14, 28, 0.88);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  cursor: zoom-out;
+}
+
+.lightbox__figure {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  justify-self: center;
+  min-width: 0;
+}
+
+.lightbox__figure img {
+  max-width: min(92vw, 460px);
+  max-height: 82svh;
+  width: auto;
+  height: auto;
+  border-radius: var(--radius);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox__figure figcaption {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.lightbox__close {
+  position: absolute;
+  top: clamp(0.75rem, 3vw, 1.5rem);
+  right: clamp(0.75rem, 3vw, 1.5rem);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--white);
+  transition: background 0.25s ease;
+}
+
+.lightbox__close:hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.lightbox__arrow {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--white);
+  transition: background 0.25s ease, transform 0.25s var(--ease);
+  flex-shrink: 0;
+}
+
+.lightbox__arrow:hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.lightbox__arrow--prev:hover {
+  transform: translateX(-3px);
+}
+
+.lightbox__arrow--next:hover {
+  transform: translateX(3px);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 760px) {
+  .review {
+    flex: 0 0 clamp(160px, 46vw, 220px);
+  }
+}
+
+@media (max-width: 520px) {
+  .lightbox {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  /* Arrows would crowd the image at this width — the caption and swipe
+     still make navigation clear */
+  .lightbox__arrow {
+    position: fixed;
+    bottom: 1.5rem;
+  }
+
+  .lightbox__arrow--prev {
+    left: 22%;
+  }
+
+  .lightbox__arrow--next {
+    right: 22%;
+  }
+
+  .lightbox__figure img {
+    max-height: 70svh;
+  }
+}

@@ -1,0 +1,174 @@
+.story {
+  background: var(--white);
+  /* Clips the gears that hang past the left edge into half gears */
+  overflow: hidden;
+}
+
+.story__inner {
+  /* Sits above the page backdrop (z-index 1) that runs behind this section */
+  position: relative;
+  z-index: 2;
+  display: grid;
+  /* Photo column first, text second. The photo is the narrower of the two
+     so the biography carries the section. */
+  grid-template-columns: 0.66fr 1.34fr;
+  gap: clamp(2rem, 4.5vw, 3.75rem);
+  align-items: center;
+}
+
+/* Photo sits left, biography right (DOM order keeps text first for readers) */
+.story__media {
+  order: -1;
+  /* Hard cap so it stays modest on wide screens */
+  max-width: 340px;
+}
+
+/* ---------- Left: biography ---------- */
+.story__body {
+  margin-top: 0.35rem;
+}
+
+.story__body p {
+  font-size: clamp(0.96rem, 1.15vw, 1.04rem);
+  line-height: 2;
+  color: var(--slate);
+  margin-bottom: 1.05rem;
+  text-wrap: pretty;
+}
+
+.story__body p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- Fact grid ---------- */
+.story__facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.story__facts li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.95rem 1.05rem;
+  border-radius: var(--radius-sm);
+  background: var(--sky-tint);
+  transition: transform 0.3s var(--ease);
+}
+
+.story__facts li:hover {
+  transform: translateY(-3px);
+}
+
+.story__factIcon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--white);
+  color: var(--accent-dark);
+  flex-shrink: 0;
+}
+
+.story__factBody {
+  min-width: 0;
+}
+
+.story__factBody span {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: var(--accent-dark);
+  line-height: 1.5;
+}
+
+.story__factBody strong {
+  display: block;
+  font-size: 0.87rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.65;
+}
+
+/* ---------- Right: portrait ---------- */
+.story__media {
+  position: relative;
+}
+
+.story__media img {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  /* Float lives on the image, not the wrapper — the wrapper carries the
+     reveal transform and the two would overwrite each other. */
+  animation: storyFloat 7s ease-in-out infinite alternate;
+}
+
+@keyframes storyFloat {
+  from {
+    transform: translateY(-7px);
+  }
+  to {
+    transform: translateY(7px);
+  }
+}
+
+/* ---------- Directional entrance ----------
+   Two classes deep so these beat the shared .reveal rules, which slide
+   everything up the page by default. */
+.story__media.reveal {
+  transform: translateX(-44px) scale(0.96);
+}
+
+.story__text.reveal {
+  transform: translateX(38px);
+}
+
+.story__media.reveal.is-visible,
+.story__text.reveal.is-visible {
+  transform: none;
+}
+
+/* Thin accent rule tucked behind the lower-right corner, mirrored now the
+   photo sits on the left and its outer edge faces the other way */
+.story__media::after {
+  content: '';
+  position: absolute;
+  right: -14px;
+  bottom: -14px;
+  width: 42%;
+  height: 42%;
+  border-right: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
+  border-bottom-right-radius: var(--radius-lg);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 940px) {
+  .story__inner {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  /* order: -1 comes from the base rule — photo stays above the text here */
+  .story__media {
+    max-width: 440px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .story__facts {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,97 @@
+.navbar-wrapper {
+  position: fixed;
+  top: 24px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1100px;
+  padding: 14px 14px 14px 32px;
+  border-radius: 50px;
+  background: rgba(22, 36, 79, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(227, 238, 249, 0.1);
+  box-shadow: 0 8px 32px rgba(15, 22, 38, 0.2);
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar-brand {
+  font-size: 20px;
+  font-weight: 700;
+  color: #FFFFFF;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: -0.5px;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.navbar-links a {
+  color: #E3EEF9;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.navbar-links a:hover {
+  color: #3E8FD0;
+}
+
+.navbar-cta {
+  display: flex;
+}
+
+.student-login-btn {
+  /* It is an <a>, not a <button> — inline elements ignore vertical padding
+     the way a button honours it, so lay it out as a flex box. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  background: #223B72;
+  color: #FFFFFF;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.student-login-btn:hover {
+  background: #3E8FD0;
+}
+
+.student-login-btn:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 900px) {
+  .navbar-links {
+    display: none;
+  }
+}

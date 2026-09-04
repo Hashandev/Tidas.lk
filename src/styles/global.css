@@ -1,0 +1,448 @@
+/* ============================================================
+   TIDAS NIKESHALA — Design System
+   Palette: INK (dark) · SLATE (text) · SKY TINT (light surface)
+   Component styles live beside their components.
+   ============================================================ */
+
+:root {
+  /* ---- Core three ---- */
+  --ink: #0f1626;
+  --slate: #5c6880;
+  --sky-tint: #e3eef9;
+
+  /* ---- Derived from the core three ---- */
+  --ink-soft: #1a2338; /* raised surface on ink */
+  --ink-line: #2a3448; /* border on ink */
+  --slate-light: #8d98ac; /* muted text */
+  --slate-dark: #3f4a60; /* strong body text */
+  --tint-deep: #cbdff2; /* border / hover on tint */
+  --tint-soft: #f2f7fc; /* barely-there wash */
+  --white: #ffffff;
+
+  /* ---- Single accent, used sparingly ---- */
+  --accent: #3e8fd0;
+  --accent-dark: #2d7bbf;
+  --accent-glow: rgba(62, 143, 208, 0.28);
+
+  /* ---- Navy (matches the navbar) ---- */
+  --navy: #16244f;
+  --navy-mid: #223b72;
+  --navy-wash: #e6ecf7;
+  --navy-line: #c9d5ec;
+
+  /* ---- Status ---- */
+  --gold: #b8862b;
+  --gold-tint: #faf1de;
+  --mint: #1e8a62;
+  --mint-tint: #e0f3ea;
+
+  /* ---- Type ---- */
+  --font-heading: 'DM Sans', system-ui, -apple-system, sans-serif;
+  /* Display face — the wordmark only. Technical letterforms suit physics. */
+  --font-display: 'Space Grotesk', 'DM Sans', system-ui, sans-serif;
+  /* Sinhala display face for the wordmark */
+  --font-sinhala-display: 'Gemunu Libre', 'Noto Sans Sinhala', sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-sinhala: 'Noto Sans Sinhala', var(--font-body);
+
+  /* ---- Layout ---- */
+  --container: 1200px;
+  --section-pad: clamp(4rem, 8vw, 7rem);
+  --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 24px;
+
+  /* ---- Motion ---- */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---- Elevation (ink-based, never black) ---- */
+  --shadow-sm: 0 1px 3px rgba(15, 22, 38, 0.06);
+  --shadow: 0 6px 28px rgba(15, 22, 38, 0.07);
+  --shadow-lg: 0 18px 50px rgba(15, 22, 38, 0.12);
+
+  --nav-h: 72px;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + 20px);
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--slate-dark);
+  background: var(--white);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--sky-tint);
+  color: var(--ink);
+}
+
+/* ============================================================
+   Layout primitives
+   ============================================================ */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.section {
+  padding: var(--section-pad) 0;
+  position: relative;
+}
+
+/* Hero + Story share one band so a single orbit animation can run across
+   the boundary between them. Neither section may create a stacking context,
+   or the backdrop could not slot between their backgrounds and content. */
+.topBand {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Light surface — the site's default rhythm partner to white */
+.section--tint {
+  background: var(--sky-tint);
+}
+
+.section--wash {
+  background: var(--tint-soft);
+}
+
+/* Dark surface — used only twice, for contrast */
+.section--ink {
+  background: var(--ink);
+  overflow: hidden;
+}
+
+/* ============================================================
+   Section headings — bilingual: Sinhala kicker over English
+   ============================================================ */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--accent-dark);
+  text-transform: uppercase;
+  letter-spacing: 2.2px;
+  margin-bottom: 0.85rem;
+}
+
+.eyebrow::before {
+  content: '';
+  width: 22px;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+}
+
+.kicker {
+  font-family: var(--font-sinhala);
+  font-size: clamp(1rem, 1.7vw, 1.2rem);
+  font-weight: 500;
+  color: var(--accent-dark);
+  line-height: 1.8;
+  margin-bottom: 0.35rem;
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-size: clamp(1.85rem, 3.4vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -1.1px;
+  line-height: 1.14;
+  color: var(--ink);
+  margin-bottom: 0.9rem;
+  text-wrap: balance;
+}
+
+.lede {
+  font-size: 1.02rem;
+  color: var(--slate);
+  line-height: 1.8;
+  max-width: 58ch;
+  text-wrap: pretty;
+}
+
+.section-head {
+  max-width: 660px;
+  margin-bottom: clamp(2.25rem, 5vw, 3.25rem);
+}
+
+.section-head--center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-head--center .eyebrow::before {
+  display: none;
+}
+
+/* Dark-surface overrides */
+.section--ink .heading {
+  color: var(--white);
+}
+
+.section--ink .lede {
+  color: var(--slate-light);
+}
+
+.section--ink .eyebrow,
+.section--ink .kicker {
+  color: var(--accent);
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 50px;
+  padding: 0 1.75rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  transition: transform 0.3s var(--ease), background 0.3s var(--ease),
+    box-shadow 0.3s var(--ease), border-color 0.3s var(--ease), color 0.3s var(--ease);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn--sm {
+  height: 40px;
+  padding: 0 1.2rem;
+  font-size: 0.85rem;
+}
+
+/* Ink is the primary button — the palette's anchor */
+.btn--ink {
+  background: var(--ink);
+  color: var(--white);
+  box-shadow: 0 4px 16px rgba(15, 22, 38, 0.18);
+}
+
+.btn--ink:hover {
+  background: var(--ink-soft);
+  box-shadow: 0 12px 30px rgba(15, 22, 38, 0.26);
+}
+
+/* Tint button — light, quiet, sits on white */
+.btn--tint {
+  background: var(--sky-tint);
+  color: var(--ink);
+  border: 1px solid var(--tint-deep);
+}
+
+.btn--tint:hover {
+  background: var(--tint-deep);
+}
+
+/* Accent — reserved for the single most important action per view */
+.btn--accent {
+  background: var(--accent);
+  color: var(--white);
+  box-shadow: 0 4px 16px var(--accent-glow);
+}
+
+.btn--accent:hover {
+  background: var(--accent-dark);
+  box-shadow: 0 12px 30px var(--accent-glow);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--tint-deep);
+}
+
+.btn--outline:hover {
+  border-color: var(--ink);
+  background: var(--sky-tint);
+}
+
+/* On ink surfaces */
+.btn--onInk {
+  background: var(--white);
+  color: var(--ink);
+}
+
+.btn--onInk:hover {
+  background: var(--sky-tint);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.btn--onInkGhost {
+  background: transparent;
+  color: var(--white);
+  border: 1.5px solid var(--ink-line);
+}
+
+.btn--onInkGhost:hover {
+  border-color: var(--slate-light);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.btn--whatsapp {
+  background: #25d366;
+  color: var(--white);
+}
+
+.btn--whatsapp:hover {
+  background: #1fb855;
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.32);
+}
+
+.btn--telegram {
+  background: #0088cc;
+  color: var(--white);
+}
+
+.btn--telegram:hover {
+  background: #006da8;
+  box-shadow: 0 12px 30px rgba(0, 136, 204, 0.32);
+}
+
+/* ============================================================
+   Pills
+   ============================================================ */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  background: var(--sky-tint);
+  color: var(--ink);
+  border: 1px solid var(--tint-deep);
+}
+
+.pill--gold {
+  background: var(--gold-tint);
+  color: var(--gold);
+  border-color: rgba(184, 134, 43, 0.22);
+}
+
+.pill--mint {
+  background: var(--mint-tint);
+  color: var(--mint);
+  border-color: rgba(30, 138, 98, 0.2);
+}
+
+.pill--onInk {
+  background: rgba(227, 238, 249, 0.1);
+  color: var(--sky-tint);
+  border-color: var(--ink-line);
+}
+
+/* ============================================================
+   Sinhala
+   ============================================================ */
+.sinhala {
+  font-family: var(--font-sinhala);
+  font-weight: 500;
+  line-height: 1.85;
+}
+
+/* ============================================================
+   Scroll reveal
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(34px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ============================================================
+   Utilities
+   ============================================================ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.no-scroll {
+  overflow: hidden;
+}

@@ -1,0 +1,327 @@
+.hero {
+  position: relative;
+  /* Two layers. The diagonal underneath gives the tint its character, but
+     at 170deg its bottom edge is still tinted on one side — which showed as
+     a hard line against the white section below. The vertical layer on top
+     fades the last third to white, so the join is seamless across the
+     full width. */
+  background:
+    linear-gradient(to bottom, transparent 62%, var(--white) 100%),
+    linear-gradient(170deg, var(--sky-tint) 0%, var(--tint-soft) 62%, var(--white) 100%);
+  overflow: hidden;
+  /* Top padding clears the fixed navbar pill (top:24px + ~73px tall).
+     No bottom padding — the figure runs flush to the section edge. */
+  padding: clamp(108px, 12vh, 140px) 0 0;
+  min-height: min(104svh, 1140px);
+  display: grid;
+  align-items: end;
+  /* No isolation/z-index here — the section must NOT form a stacking
+     context, or the page backdrop cannot paint between its background
+     and its content. */
+}
+
+/* Fades the very bottom of the hero into white. Sits ABOVE the figure
+   (content is z-index 2) so it softens the cutout's hard clipped edge —
+   a mask on the image itself would fade at the image's own bottom, which
+   is not where the section cuts it. */
+.hero::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(130px, 17vh, 230px);
+  /* Below the orbit backdrop (z-index 1), above the hero's own background.
+     At 4 it painted over the animation and washed the lines out. */
+  z-index: 0;
+  pointer-events: none;
+  /* Three stops rather than two — a straight ramp still leaves a faint
+     band where it meets the next section's flat white. */
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.72) 58%,
+    var(--white) 100%
+  );
+}
+
+/* Soft ink wash in the top-left, keeps the tint from going flat */
+.hero::before {
+  content: '';
+  position: absolute;
+  width: min(760px, 80vw);
+  aspect-ratio: 1;
+  top: -34%;
+  left: -16%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(62, 143, 208, 0.16), transparent 68%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+/* ---------- Copy ---------- */
+.hero__copy {
+  position: relative;
+  /* The grid is bottom-aligned so the figure stays grounded; the copy is
+     short now, so centre it rather than letting it sink to the floor. */
+  align-self: center;
+  padding-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+
+/* ---------- Script watermark behind the wordmark ----------
+   Selector is deliberately two classes deep: `.hero__copy > *` below
+   also matches this element and would otherwise override the animation,
+   leaving the watermark opaque and unrotated. */
+.hero__copy > .hero__watermark {
+  position: absolute;
+  /* Behind the copy, still inside the hero's stacking context */
+  z-index: -1;
+  top: -4%;
+  left: 3%;
+  font-family: 'Caveat', cursive;
+  font-size: clamp(5.4rem, 14.6vw, 12.6rem);
+  font-weight: 700;
+  line-height: 0.78;
+  letter-spacing: 1px;
+  color: var(--navy);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  /* Its own animation — the shared heroIn ends on `transform: none`,
+     which would wipe out the rotation. */
+  animation: watermarkIn 1.3s var(--ease) 0.15s both;
+}
+
+/* Each line indents independently. In em so they track the clamped size. */
+.hero__copy > .hero__watermark span {
+  display: block;
+}
+
+.hero__copy > .hero__watermark .hero__wmSmart {
+  margin-left: 1em;
+}
+
+.hero__copy > .hero__watermark .hero__wmPhysics {
+  margin-left: 0.34em;
+}
+
+@keyframes watermarkIn {
+  from {
+    opacity: 0;
+    transform: rotate(-35deg) translateY(24px);
+  }
+  to {
+    opacity: 0.09;
+    transform: rotate(-35deg);
+  }
+}
+
+.hero__copy > * {
+  animation: heroIn 0.85s var(--ease) both;
+}
+
+@keyframes heroIn {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hero__title {
+  font-family: var(--font-sinhala-display);
+  font-size: clamp(3.05rem, 7vw, 5.75rem);
+  font-weight: 800;
+  /* Sinhala vowel signs sit well above and below the baseline — tight
+     leading clips them, so this runs looser than the Latin setting did. */
+  line-height: 1.2;
+  /* Negative tracking pulls Sinhala conjuncts apart visually; keep neutral */
+  letter-spacing: 0;
+  color: var(--ink);
+  /* Runs straight into the buttons now the lead paragraphs are gone */
+  margin-bottom: 2rem;
+  animation-delay: 0.16s;
+}
+
+.hero__title span {
+  display: block;
+  color: var(--accent);
+  /* Indented off the first line. In em so it tracks the clamped size. */
+  margin-left: 0.42em;
+}
+
+.hero__actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+  animation-delay: 0.26s;
+}
+
+/* ---------- Portrait: full-bleed cutout, no frame ---------- */
+.hero__portrait {
+  display: flex;
+  justify-content: center;
+  align-self: end;
+  animation: heroIn 0.95s var(--ease) 0.45s both;
+}
+
+/* Sized by HEIGHT, not width. The cutout is ~1:2, so constraining width
+   would make it taller than the hero and drive the head under the navbar.
+   Height-driven also keeps it near its native 636px wide — i.e. sharp. */
+.portrait {
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* The cutout itself — shown whole, never cropped */
+.portrait__img {
+  position: relative;
+  z-index: 2;
+  /* Native cutout is 636px wide. At a 1000px cap this renders ~492px wide
+     (1.29x density) — about as far as this source stretches before a 2x
+     display starts showing softness. Bigger than this needs a bigger photo. */
+  height: min(88svh, 1000px);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: bottom;
+  display: block;
+  /* Grounds the figure so it doesn't float on the tint */
+  /* No drop-shadow. The figure runs flush to the hero's bottom edge, so any
+     downward shadow is sliced by overflow:hidden and shows as a hard-edged
+     grey block under the feet. The ground disc below does the grounding. */
+}
+
+/* Soft tinted disc the figure sits against */
+.portrait__ground {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  bottom: 0;
+  width: 116%;
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 58%,
+    rgba(62, 143, 208, 0.2) 0%,
+    rgba(227, 238, 249, 0.75) 46%,
+    transparent 70%
+  );
+  /* The disc is anchored to the hero's bottom edge, where overflow:hidden
+     slices it — and it is still opaque down there, which showed as a hard
+     tinted rectangle. Fade it out before it reaches the cut. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 52%, transparent 92%);
+  mask-image: linear-gradient(to bottom, #000 52%, transparent 92%);
+  pointer-events: none;
+}
+
+/* ---------- Scroll cue ---------- */
+.hero__scroll {
+  position: absolute;
+  left: 50%;
+  bottom: 1.25rem;
+  /* Above the bottom fade, or the cue would be washed out by it */
+  z-index: 5;
+  width: 38px;
+  height: 38px;
+  margin-left: -19px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--slate);
+  background: var(--white);
+  border: 1px solid var(--tint-deep);
+  transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  animation: scrollBob 2.4s ease-in-out infinite;
+}
+
+.hero__scroll:hover {
+  color: var(--white);
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+@keyframes scrollBob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1080px) {
+  .hero__inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 2.75rem;
+  }
+
+  .hero__actions {
+    justify-content: center;
+  }
+
+  /* The indent would throw the centred title off-axis here */
+  .hero__title span {
+    margin-left: 0;
+  }
+
+  /* Stacked: copy first, figure grounded beneath it */
+  .hero__copy {
+    order: 1;
+    padding-bottom: 0;
+  }
+
+  .hero__portrait {
+    order: 2;
+  }
+
+  .portrait__img {
+    height: min(74svh, 760px);
+  }
+}
+
+@media (max-width: 700px) {
+  .portrait__img {
+    height: min(62svh, 580px);
+  }
+
+  .hero__scroll {
+    display: none;
+  }
+}
+
+@media (max-width: 460px) {
+  .hero__actions .btn {
+    width: 100%;
+  }
+}

@@ -1,0 +1,33 @@
+/* Gear train pinned to the left edge of the Story section */
+.gears {
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: clamp(140px, 16vw, 240px);
+  pointer-events: none;
+  /* Gears whose centres sit past x=0 get clipped by the section, which is
+     what gives the half-gear look along the edge. */
+  overflow: visible;
+}
+
+.gears__gear {
+  /* Rotation is a product of scroll distance and this gear's rate, so the
+     train turns with the page rather than on a timer. */
+  transform: rotate(calc(var(--scroll, 0) * var(--rate, 0) * 1deg));
+  transform-box: view-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gears__gear {
+    transform: none;
+  }
+}
+
+/* Too cramped beside the stacked layout */
+@media (max-width: 940px) {
+  .gears {
+    display: none;
+  }
+}

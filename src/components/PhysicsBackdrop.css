@@ -1,0 +1,76 @@
+/* Orbital motif behind the hero figure */
+.physics {
+  position: absolute;
+  z-index: 1;
+  /* Nudged right of centre so the orbits sweep around the figure rather
+     than spilling across the headline in the left column. */
+  left: 60%;
+  top: -18%;
+  width: 335%;
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  pointer-events: none;
+  overflow: visible;
+}
+
+.physics__ring {
+  fill: none;
+  stroke: var(--accent);
+  /* Held to a hairline regardless of how far the SVG is scaled up */
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.32;
+}
+
+/* Each electron takes its colour from the --electron property set inline */
+.physics__electron {
+  fill: var(--electron, var(--accent));
+  filter: drop-shadow(0 0 8px var(--electron, var(--accent)));
+  opacity: 0.9;
+}
+
+/* Static orbits are still legible — just stop the electrons moving */
+@media (prefers-reduced-motion: reduce) {
+  .physics__electron animateMotion {
+    display: none;
+  }
+}
+
+/* Page-level variant — sized against the whole Hero+Story band so the
+   orbits cross the boundary instead of stopping at the hero's edge.
+   z-index 1 puts it above both section backgrounds; their content is at 2. */
+.physics--page {
+  position: absolute;
+  z-index: 1;
+  left: 62%;
+  top: 14svh;
+  width: min(1120px, 95vw);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  pointer-events: none;
+  overflow: visible;
+  /* Full strength for most of its height, easing off only at the very
+     bottom so the lines don't run into the biography text. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 97%);
+  mask-image: linear-gradient(to bottom, #000 72%, transparent 97%);
+}
+
+@media (max-width: 1080px) {
+  /* Stacked layout — recentre over the figure */
+  .physics {
+    left: 50%;
+    width: 315%;
+  }
+
+  .physics--page {
+    left: 50%;
+    width: min(950px, 122vw);
+  }
+}
+
+@media (max-width: 700px) {
+  .physics {
+    width: 350%;
+    top: -8%;
+  }
+}

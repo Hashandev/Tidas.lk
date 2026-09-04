@@ -1,0 +1,160 @@
+.footer {
+  background: var(--ink);
+  padding: clamp(3.25rem, 6vw, 4.5rem) 0 1.85rem;
+  border-top: 1px solid var(--ink-line);
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr 1fr 1fr;
+  gap: clamp(2rem, 4vw, 3.25rem);
+  padding-bottom: 2.75rem;
+  border-bottom: 1px solid var(--ink-line);
+}
+
+/* ---------- Brand column ---------- */
+/* Plain wordmark, matching the navbar */
+.footer__logo {
+  display: inline-block;
+  margin-bottom: 1rem;
+  font-family: 'Inter', var(--font-body);
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--white);
+  transition: color 0.25s ease;
+}
+
+.footer__logo:hover {
+  color: var(--accent);
+}
+
+.footer__blurb {
+  font-size: 0.87rem;
+  line-height: 1.75;
+  color: var(--slate-light);
+  max-width: 38ch;
+  margin-bottom: 1.3rem;
+}
+
+.footer__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer__contact a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.87rem;
+  font-weight: 500;
+  color: var(--sky-tint);
+  transition: color 0.25s ease;
+  width: fit-content;
+}
+
+.footer__contact a:hover {
+  color: var(--accent);
+}
+
+.footer__contact svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+/* ---------- Link columns ---------- */
+.footer__col h3 {
+  font-family: var(--font-heading);
+  font-size: 0.93rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+
+.footer__col ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.footer__col a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.86rem;
+  color: var(--slate-light);
+  transition: color 0.25s ease, padding-left 0.25s var(--ease);
+}
+
+.footer__col a:hover {
+  color: var(--sky-tint);
+  padding-left: 4px;
+}
+
+/* Platform marks sit slightly dimmer than the label, then light up together */
+.footer__col a svg {
+  flex-shrink: 0;
+  color: var(--accent);
+  opacity: 0.85;
+  transition: opacity 0.25s ease;
+}
+
+.footer__col a:hover svg {
+  opacity: 1;
+}
+
+/* ---------- Bottom bar ---------- */
+.footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 1.6rem;
+}
+
+.footer__bottom p {
+  font-size: 0.81rem;
+  color: var(--slate);
+}
+
+/* ---------- Developer credit ---------- */
+.footer__credit a {
+  color: var(--accent);
+  font-weight: 600;
+  transition: color 0.25s ease;
+}
+
+.footer__credit a:hover {
+  color: var(--sky-tint);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer__brand {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 560px) {
+  .footer__grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .footer__bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  /* Right-aligning reads as lopsided once everything else centres */
+  .footer__credit {
+    text-align: center;
+  }
+}

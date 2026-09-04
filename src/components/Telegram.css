@@ -1,0 +1,148 @@
+.tg {
+  background: var(--white);
+  position: relative;
+  /* The ball starts off the left edge — keep it from widening the page */
+  overflow: hidden;
+}
+
+/* Physics backdrop — sits above the section background, below the cards */
+.tg__physics {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Required: without a z-index the cards are statically positioned and the
+   absolutely-positioned canvas would paint on top of them. */
+.tg .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Heading block ---------- */
+.tg .section-head {
+  margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem);
+}
+
+/* Pulled close to the line beneath it so the two read as one unit */
+.tg .heading {
+  margin-bottom: 0.45rem;
+}
+
+/* Narrower measure keeps it visually anchored under the heading rather
+   than running wider than it */
+.tg .lede {
+  max-width: 44ch;
+  margin: 0 auto;
+}
+
+.tg__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+/* ---------- Card ---------- */
+.tgCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 2rem 1.75rem 1.75rem;
+  border-radius: var(--radius-lg);
+  /* Translucent so the physics backdrop reads through. Blur is kept light —
+     a heavier one would smear the ball into a haze. */
+  background: rgba(230, 236, 247, 0.5);
+  backdrop-filter: blur(3px) saturate(140%);
+  -webkit-backdrop-filter: blur(3px) saturate(140%);
+  border: 1px solid rgba(201, 213, 236, 0.85);
+  text-align: center;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease),
+    border-color 0.4s var(--ease);
+}
+
+.tgCard:hover {
+  transform: translateY(-6px);
+  border-color: var(--navy-mid);
+  box-shadow: 0 16px 40px rgba(22, 36, 79, 0.16);
+}
+
+/* Icon tile */
+.tgCard__tile {
+  display: grid;
+  place-items: center;
+  width: 74px;
+  height: 74px;
+  border-radius: 20px;
+  background: linear-gradient(145deg, var(--navy-mid), var(--navy));
+  color: var(--white);
+  box-shadow: 0 10px 24px rgba(22, 36, 79, 0.28);
+  transition: transform 0.4s var(--ease);
+}
+
+.tgCard:hover .tgCard__tile {
+  transform: scale(1.06) rotate(-4deg);
+}
+
+/* Title — middle word picked out in navy */
+.tgCard__title {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  font-family: var(--font-heading);
+  font-size: clamp(1.1rem, 1.7vw, 1.32rem);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.tgCard__title em {
+  font-style: normal;
+  color: var(--navy-mid);
+}
+
+/* Join button */
+.tgCard__join {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50px;
+  margin-top: auto;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: 1px solid transparent;
+  transition: background 0.3s var(--ease), color 0.3s var(--ease),
+    box-shadow 0.3s var(--ease);
+}
+
+.tgCard__join:hover {
+  background: var(--navy);
+  color: var(--white);
+  box-shadow: 0 10px 26px rgba(22, 36, 79, 0.3);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .tg__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .tg__grid {
+    grid-template-columns: 1fr;
+    gap: 1.15rem;
+  }
+}
