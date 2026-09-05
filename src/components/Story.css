@@ -160,8 +160,9 @@
     gap: 2.5rem;
   }
 
-  /* order: -1 comes from the base rule — photo stays above the text here */
+  /* Reset order so the photo falls below the text on mobile */
   .story__media {
+    order: 2;
     max-width: 440px;
     margin: 0 auto;
   }
