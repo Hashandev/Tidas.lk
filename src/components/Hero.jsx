@@ -18,17 +18,19 @@ export default function Hero() {
             {hero.title}
             <span>{hero.titleAccent}</span>
           </h1>
+        </div>
 
-          <div className="hero__actions">
-            <a href="#telegram" className="btn btn--ink">
-              <Icon name="telegram" size={18} />
-              Join Telegram
-            </a>
-            <a href={brand.lmsUrl} className="btn btn--outline" target="_blank" rel="noopener noreferrer">
-              <Icon name="laptop" size={18} />
-              Student Login
-            </a>
-          </div>
+        {/* Actions pulled out of hero__copy so CSS can reorder them
+            independently on mobile (below the portrait). */}
+        <div className="hero__actions">
+          <a href="#telegram" className="btn btn--ink">
+            <Icon name="telegram" size={18} />
+            Join Telegram
+          </a>
+          <a href={brand.lmsUrl} className="btn btn--outline" target="_blank" rel="noopener noreferrer">
+            <Icon name="laptop" size={18} />
+            Student Login
+          </a>
         </div>
 
         <div className="hero__portrait">
