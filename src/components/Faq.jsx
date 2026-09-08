@@ -5,7 +5,7 @@ import { faqIntro, faqs } from '../data/content'
 import './Faq.css'
 
 export default function Faq() {
-  const [open, setOpen] = useState(0)
+  const [open, setOpen] = useState(-1)
 
   return (
     <section className="section faq" id="faq">

@@ -19,6 +19,8 @@ export default function FloatingActions() {
       <a
         className="floaty floaty--wa"
         href={brand.whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
         aria-label="Message us on WhatsApp"
       >
         <Icon name="whatsapp" size={22} />

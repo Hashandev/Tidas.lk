@@ -1,0 +1,25 @@
+/*
+  # === Security Headers ===
+  # Works on Netlify, Cloudflare Pages. For Vercel use vercel.json instead.
+
+  # Prevent clickjacking — disallow embedding this site in iframes
+  X-Frame-Options: DENY
+
+  # Prevent MIME-type sniffing — browser must respect Content-Type
+  X-Content-Type-Options: nosniff
+
+  # Control referrer information sent to external sites
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # Content Security Policy — restrict resource origins
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'
+
+  # Disable unnecessary browser features for this landing page
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()
+
+  # Force HTTPS for 1 year (enable only after confirming HTTPS works)
+  # Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
+  # Prevent cross-origin info leaks
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin

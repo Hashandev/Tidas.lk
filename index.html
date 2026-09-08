@@ -5,6 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0F1626" />
 
+    <!-- Security headers -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        default-src 'self';
+        script-src  'self';
+        style-src   'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src    'self' https://fonts.gstatic.com;
+        img-src     'self' data:;
+        connect-src 'self';
+        frame-src   'none';
+        object-src  'none';
+        base-uri    'self';
+        form-action 'self';
+      "
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
     <title>Tidas Nikeshala — A/L Physics | Simplifying Physics for Excellence</title>
     <meta
       name="description"

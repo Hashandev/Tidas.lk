@@ -29,7 +29,7 @@ export default function Navbar() {
         </div>
 
         <div className="navbar-cta">
-          <a className="student-login-btn" href={brand.lmsUrl}>
+          <a className="student-login-btn" href={brand.lmsUrl} target="_blank" rel="noopener noreferrer">
             Student Login
           </a>
         </div>

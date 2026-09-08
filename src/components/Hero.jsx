@@ -24,7 +24,7 @@ export default function Hero() {
               <Icon name="telegram" size={18} />
               Join Telegram
             </a>
-            <a href={brand.lmsUrl} className="btn btn--outline">
+            <a href={brand.lmsUrl} className="btn btn--outline" target="_blank" rel="noopener noreferrer">
               <Icon name="laptop" size={18} />
               Student Login
             </a>
