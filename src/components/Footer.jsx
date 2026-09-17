@@ -1,4 +1,5 @@
 import Icon from './Icon'
+import { Link } from 'react-router-dom'
 import { brand, developer, footerLinks } from '../data/content'
 import './Footer.css'
 
@@ -8,13 +9,26 @@ const external = (href) => /^https?:\/\//.test(href)
 const linkProps = (href) =>
   external(href) ? { target: '_blank', rel: 'noopener noreferrer' } : {}
 
+/* A client-side route like /privacy-policy — not external, not a #hash.
+   These go through <Link> so they don't trigger a full page reload. */
+const isRoute = (href) => href.startsWith('/') && !href.includes('#')
+
+function FooterLink({ href, children }) {
+  if (isRoute(href)) return <Link to={href}>{children}</Link>
+  return (
+    <a href={href} {...linkProps(href)}>
+      {children}
+    </a>
+  )
+}
+
 export default function Footer() {
   return (
     <footer className="footer">
       <div className="container">
         <div className="footer__grid">
           <div className="footer__brand">
-            <a href="#top" className="footer__logo">
+            <a href="/" className="footer__logo">
               {brand.siteName}
             </a>
 
@@ -41,10 +55,10 @@ export default function Footer() {
               <ul>
                 {col.links.map((link) => (
                   <li key={link.label}>
-                    <a href={link.href} {...linkProps(link.href)}>
+                    <FooterLink href={link.href}>
                       {link.icon && <Icon name={link.icon} size={15} />}
                       {link.label}
-                    </a>
+                    </FooterLink>
                   </li>
                 ))}
               </ul>

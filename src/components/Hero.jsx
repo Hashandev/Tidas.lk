@@ -23,7 +23,7 @@ export default function Hero() {
         {/* Actions pulled out of hero__copy so CSS can reorder them
             independently on mobile (below the portrait). */}
         <div className="hero__actions">
-          <a href="#telegram" className="btn btn--ink">
+          <a href="/#telegram" className="btn btn--ink">
             <Icon name="telegram" size={18} />
             Join Telegram
           </a>
@@ -50,7 +50,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <a className="hero__scroll" href="#story" aria-label="Scroll to our story">
+      <a className="hero__scroll" href="/#story" aria-label="Scroll to our story">
         <Icon name="arrowDown" size={16} />
       </a>
     </section>

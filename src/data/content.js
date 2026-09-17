@@ -26,10 +26,10 @@ export const brand = {
 }
 
 export const navLinks = [
-  { label: 'Our Story', href: '#story' },
-  { label: 'Testimonials', href: '#testimonials' },
-  { label: 'Telegram', href: '#telegram' },
-  { label: 'FAQ', href: '#faq' },
+  { label: 'Our Story', href: '/#story' },
+  { label: 'Testimonials', href: '/#testimonials' },
+  { label: 'Telegram', href: '/#telegram' },
+  { label: 'FAQ', href: '/#faq' },
 ]
 
 /* ---------- Scrolling ticker above the navbar ---------- */
@@ -200,12 +200,10 @@ export const faqs = [
 
 /* ---------- Footer ---------- */
 
-/* Policy pages — hrefs are placeholders until the pages exist. */
-export const legalLinks = [
-  { label: 'Privacy Policy', href: '#' },
-  { label: 'Terms and Conditions', href: '#' },
-  { label: 'Refund Policy', href: '#' },
-]
+/* Shown in the footer. Only Privacy Policy is listed — the Terms and
+   Refund pages still exist at /terms-and-conditions and /refund-policy,
+   reachable from the switcher at the top of any policy page. */
+export const legalLinks = [{ label: 'Privacy Policy', href: '/privacy-policy' }]
 
 export const developer = {
   name: 'Inwaits',
@@ -216,18 +214,19 @@ export const footerLinks = [
   {
     title: 'Channels',
     links: [
-      { label: '2028 Theory', href: '#telegram' },
-      { label: '2027 Smart Revision', href: '#telegram' },
-      { label: 'Smart Physics Main', href: '#telegram' },
+      { label: '2028 Theory', href: '/#telegram' },
+      { label: '2027 Smart Revision', href: '/#telegram' },
+      { label: 'Smart Physics Main', href: '/#telegram' },
     ],
   },
   {
     title: 'Students',
     links: [
-      { label: 'Student Login (LMS)', href: '#' },
-      { label: 'Our Story', href: '#story' },
-      { label: 'Testimonials', href: '#testimonials' },
-      { label: 'FAQ', href: '#faq' },
+      { label: 'Student Login (LMS)', href: brand.lmsUrl },
+      { label: 'Our Story', href: '/#story' },
+      { label: 'Testimonials', href: '/#testimonials' },
+      { label: 'FAQ', href: '/#faq' },
+      { label: 'Privacy Policy', href: '/privacy-policy' },
     ],
   },
   {

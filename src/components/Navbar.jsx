@@ -22,10 +22,10 @@ export default function Navbar() {
         </div>
         
         <div className="navbar-links">
-          <a href="#story">Our Story</a>
-          <a href="#testimonials">Testimonials</a>
-          <a href="#telegram">Telegram</a>
-          <a href="#support">Support</a>
+          <a href="/#story">Our Story</a>
+          <a href="/#testimonials">Testimonials</a>
+          <a href="/#telegram">Telegram</a>
+          <a href="/#faq">Support</a>
         </div>
 
         <div className="navbar-cta">
